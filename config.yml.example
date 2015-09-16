@@ -1,0 +1,24 @@
+---
+# chime on either of the doorbell dash buttons connecting
+'3c:03:37:3f:6e:bc + 89:d0:fe:b6:08:44':
+  add+old: mpc pause; mplayer chime.ogg
+
+# script your toilet or something on the dash button connecting
+'fb:73:9c:0e:ec:8f':
+  add+old: 'flush-toilet --now'
+
+# say hello when an android device connects
+android-*:
+  add+old: 'echo "Hello, Android user!" | festival --tts'
+  del: 'echo "I miss that Android user." | festival --tts'
+
+# say the hostname if an unidentified device connects
+*:
+  add: |
+    if [ -n "$HOST" ]; then
+      echo "Nice to meet you, $HOST!" | festival --tts
+    fi
+  old: |
+    if [ -n "$HOST" ]; then
+      echo "Hello again, $HOST!" | festival --tts
+    fi
